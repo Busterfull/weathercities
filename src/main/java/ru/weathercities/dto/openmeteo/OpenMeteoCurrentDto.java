@@ -1,4 +1,4 @@
-package ru.weathercities.dto.OpenMeteoDto;
+package ru.weathercities.dto.openmeteo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

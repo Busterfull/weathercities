@@ -14,8 +14,6 @@ import java.util.Optional;
 
 public interface CityRepository extends JpaRepository<City, Long> {
 
-    Optional<City> findByName(String city);
-
     @Query("select new org.apache.commons.lang3.tuple.ImmutableTriple(c.name, t.localDate, t.temperature) " +
             "from City c inner join Temperature t on t.cityId = c.id " +
             "where c.name = :name " +

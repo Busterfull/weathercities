@@ -1,10 +1,12 @@
 package ru.weathercities.services;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.tuple.Triple;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.weathercities.dto.CityDto;
 import ru.weathercities.entity.Temperature;
+import ru.weathercities.exceptions.WeatherCitiesExceptions;
 import ru.weathercities.outputs.AccuweatherService;
 import ru.weathercities.outputs.OpenMeteoService;
 import ru.weathercities.outputs.OpenWeatherMapService;
@@ -25,25 +27,13 @@ public class WeatherService {
     private final OpenMeteoService openMeteoService;
     private final CityRepository cityRepository;
 
-    public List<CityDto> getDataWeatherWithDate(String nameCity, LocalDate date) {
-        return cityRepository.getWeatherWithDate(nameCity, date).stream()
-                .map(c -> {
-                    CityDto city = new CityDto();
-                    city.setCityName(c.getLeft());
-                    city.setDate(c.getMiddle());
-                    city.setTemperature(c.getRight());
-                    return city;
-                }).toList();
+    public List<Triple<String, LocalDate, Double>> getDataWeatherWithDate(String nameCity, LocalDate date) {
+        return cityRepository.getWeatherWithDate(nameCity, date);
     }
-    public Object getDataWeather(String nameCity) {
+    public Triple<String, LocalDate, Double> getDataWeather(String nameCity) {
         return cityRepository.getWeatherLast(nameCity, PageRequest.of(0, 1)).get()
-                .map(c -> {
-                    CityDto city = new CityDto();
-                    city.setCityName(c.getLeft());
-                    city.setDate(c.getMiddle());
-                    city.setTemperature(c.getRight());
-                    return city;
-                });
+                .findFirst()
+                .orElseThrow(() -> new WeatherCitiesExceptions("Нет данных"));
     }
 
     public void getDataWeatherTimer() {
