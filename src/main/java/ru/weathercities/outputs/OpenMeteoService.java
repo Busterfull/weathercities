@@ -1,10 +1,9 @@
 package ru.weathercities.outputs;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.weathercities.dto.OpenMeteoDto.OpenMeteoDto;
+import ru.weathercities.dto.openmeteo.OpenMeteoDto;
 
 @Service
 @RequiredArgsConstructor

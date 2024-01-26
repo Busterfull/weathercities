@@ -8,6 +8,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import ru.weathercities.entity.City;
 import ru.weathercities.entity.Temperature;
@@ -81,7 +82,7 @@ class WeatherServiceTest {
     @DisplayName("Last data")
     void getDataWeatherTest() {
         given(cityRepository.getWeatherLast("Moscow", PageRequest.of(0, 1)))
-                .willReturn(Page.empty());
+                .willReturn(new PageImpl<>(List.of(Triple.of("Moscow", LocalDate.of(2024,1, 25), 1.0))));
         undertest.getDataWeather("Moscow");
     }
 

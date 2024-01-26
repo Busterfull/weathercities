@@ -37,7 +37,6 @@ dependencies {
 	implementation("org.hibernate.common:hibernate-commons-annotations:6.0.6.Final")
 	implementation("mysql:mysql-connector-java:8.0.33")
 	implementation("org.apache.commons:commons-lang3:3.14.0")
-	implementation("p6spy:p6spy:3.9.1")
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -46,3 +45,8 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.withType<JavaCompile> {
+	options.encoding = "UTF-8"
+}
+

@@ -1,6 +1,5 @@
 package ru.weathercities.config;
 
-import com.p6spy.engine.spy.P6DataSource;
 import javax.persistence.EntityManagerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +30,6 @@ public class JpaRepositoryConfig {
     private String username;
     @Value("${spring.datasource.password}")
     private String password;
-    @Value("${spring.datasource.proxy:true}")
-    private boolean proxy;
 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -53,11 +50,8 @@ public class JpaRepositoryConfig {
         dataSource.setUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
-        if (proxy) {
-            return new P6DataSource(dataSource);
-        } else {
-            return dataSource;
-        }
+
+        return dataSource;
     }
 
     @Bean
@@ -78,5 +72,4 @@ public class JpaRepositoryConfig {
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
         return properties;
     }
-
 }

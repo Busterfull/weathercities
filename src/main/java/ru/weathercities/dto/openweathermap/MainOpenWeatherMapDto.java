@@ -1,4 +1,4 @@
-package ru.weathercities.dto.OpenWeatherMapDto;
+package ru.weathercities.dto.openweathermap;
 
 import lombok.Getter;
 import lombok.Setter;

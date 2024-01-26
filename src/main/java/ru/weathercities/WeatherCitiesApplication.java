@@ -10,7 +10,6 @@ import java.util.TimeZone;
 public class WeatherCitiesApplication {
 
 	public static void main(String[] args) {
-		System.setProperty("file.encoding", "UTF-8");
 		SpringApplication.run(WeatherCitiesApplication.class, args);
 	}
 

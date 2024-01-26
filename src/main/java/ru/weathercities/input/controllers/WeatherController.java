@@ -1,6 +1,7 @@
 package ru.weathercities.input.controllers;
 
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.tuple.Triple;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.weathercities.dto.CityDto;
@@ -21,13 +22,25 @@ public class WeatherController {
     @GetMapping
     public ResponseEntity<Response<List<CityDto>>> getWeatherCity(@RequestParam(name = "city") String city,
                                                            @RequestParam(name = "date") LocalDate date) {
-        List<CityDto> c = weatherService.getDataWeatherWithDate(city, date);
-        return ResponseBuilder.success(c);
+        List<CityDto> listData = weatherService.getDataWeatherWithDate(city, date).stream()
+                .map(c -> {
+                    CityDto cityDto = new CityDto();
+                    cityDto.setCityName(c.getLeft());
+                    cityDto.setDate(c.getMiddle());
+                    cityDto.setTemperature(c.getRight());
+                    return cityDto;
+                }).toList();
+         return ResponseBuilder.success(listData);
     }
 
     @GetMapping("/{city}")
-    public ResponseEntity<Response<Object>> getWeatherCity(@PathVariable String city) {
-        return ResponseBuilder.success(weatherService.getDataWeather(city));
+    public ResponseEntity<Response<CityDto>> getWeatherCity(@PathVariable String city) {
+        Triple<String, LocalDate, Double> dataWeather = weatherService.getDataWeather(city);
+        CityDto cityDto = new CityDto();
+        cityDto.setCityName(dataWeather.getLeft());
+        cityDto.setDate(dataWeather.getMiddle());
+        cityDto.setTemperature(dataWeather.getRight());
+        return ResponseBuilder.success(cityDto);
     }
 
 }
