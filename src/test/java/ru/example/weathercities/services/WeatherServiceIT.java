@@ -25,7 +25,7 @@ public class WeatherServiceIT {
      @see OpenMeteoService#getWeather(String, String)
      */
     @Test
-    @DisplayName("Интеграционный тест")
+    @DisplayName("OpenMeteo IT")
     void openMeteoTest() {
         String lat = "55.76";
         String lon = "36.37";
@@ -34,7 +34,7 @@ public class WeatherServiceIT {
     }
 
     @Test
-    @DisplayName("Интеграционный тест")
+    @DisplayName("OpenWeatherMap IT")
     void openWeatherTest() {
         String lat = "55.76";
         String lon = "36.37";
@@ -43,7 +43,7 @@ public class WeatherServiceIT {
     }
 
     @Test
-    @DisplayName("Интеграционный тест")
+    @DisplayName("Аccuweather IT")
     void accuweatherTest() {
         Double temp = accuweatherService.getWeather("3369271");
         assertNotNull(temp);
